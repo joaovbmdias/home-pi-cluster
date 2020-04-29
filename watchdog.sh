@@ -1,6 +1,7 @@
 # Create Watchdog Process that will keep RPi alive 24/7 even in casa of catastrophic failure
 # except power outage (no Power no Pi)
 
+ECHO creating watchdog executable file
 cd /home/pi
 
 cat > watchdog.sh << EOF
@@ -14,7 +15,9 @@ while :
 EOF
 
 sudo chmod +x /home/pi/watchdog.sh
+ECHO watchdog successfully created
 
+ECHO add watchdog to cron
 cat > create_cron << EOF
 # Edit this file to introduce tasks to be run by cron.
 #
@@ -45,3 +48,4 @@ EOF
 crontab /home/pi/create_cron
 
 rm /home/pi/create_cron
+ECHO successfully created cron
