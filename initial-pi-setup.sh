@@ -4,12 +4,12 @@
 new_password=raspberry
 user=pi
 
-new_hostname=raspberrypi
+new_hostname=raspberrypi2
 cur_hostname="$(hostname)"
 
 echo
 echo System Update
-#sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt-get update -y && sudo apt-get upgrade -y
 echo Successfully Updated
 echo
 
