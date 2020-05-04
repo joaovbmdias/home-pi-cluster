@@ -1,10 +1,11 @@
+#!/bin/bash
+
 # Create Watchdog Process that will keep RPi alive 24/7 even in casa of catastrophic failure
 # except power outage (no Power no Pi)
 
-ECHO creating watchdog executable file
-cd /home/pi
+echo Creating watchdog executable file
 
-cat > watchdog.sh << EOF
+cat > /etc/.watchdog.sh << EOF
 #!/bin/bash
 echo " Starting user level protection"
 while :
@@ -14,10 +15,10 @@ while :
    done
 EOF
 
-sudo chmod +x /home/pi/watchdog.sh
-ECHO watchdog successfully created
+sudo chmod +x /etc/.watchdog.sh
+echo SUCCESS!
 
-ECHO add watchdog to cron
+echo Add watchdog to cron
 cat > create_cron << EOF
 # Edit this file to introduce tasks to be run by cron.
 #
@@ -27,25 +28,25 @@ cat > create_cron << EOF
 #
 # To define the time you can provide concrete values for
 # minute (m), hour (h), day of month (dom), month (mon),
-# and day of week (dow) or use '*' in these fields (for 'any$
+# and day of week (dow) or use '*' in these fields (for 'any').
 #
-# Notice that tasks will be started based on the cron's syst$
+# Notice that tasks will be started based on the cron's system
 # daemon's notion of time and timezones.
 #
-# Output of the crontab jobs (including errors) is sent thro$
-# email to the user the crontab file belongs to (unless redi$
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
 #
 # For example, you can run a backup of all your user accounts
 # at 5 a.m every week with:
 # 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
 #
-# For more information see the manual pages of crontab(5) an$
+# For more information see the manual pages of crontab(5) and cron(8)
 #
 # m h  dom mon dow   command
-@reboot /home/pi/watchdog.sh
+echo @reboot /etc/.watchdog.sh >>
 EOF
 
-crontab /home/pi/create_cron
+crontab create_cron
 
-rm /home/pi/create_cron
-ECHO successfully created cron
+rm create_cron
+echo SUCCESS!
