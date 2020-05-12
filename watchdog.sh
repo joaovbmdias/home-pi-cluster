@@ -15,7 +15,7 @@ while :
    done
 EOF
 
-sudo chmod +x /etc/.watchdog.sh
+chmod +x /etc/.watchdog.sh
 echo SUCCESS!
 
 echo Add watchdog to cron
@@ -43,7 +43,7 @@ cat > create_cron << EOF
 # For more information see the manual pages of crontab(5) and cron(8)
 #
 # m h  dom mon dow   command
-echo @reboot /etc/.watchdog.sh >>
+@reboot /etc/.watchdog.sh
 EOF
 
 crontab create_cron

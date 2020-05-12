@@ -21,7 +21,7 @@ fi
 
 echo
 echo System Update
-#sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt-get update -y && sudo apt-get upgrade -y
 echo SUCCESS!
 
 echo
