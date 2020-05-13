@@ -1,0 +1,56 @@
+replicaCount: 1
+
+image:
+  repository: "gjeanmart/jackettvpn" # Special image to use Jackett over a VPN
+  tag: "arm-latest"
+  pullPolicy: IfNotPresent
+
+env:
+  - name: VPN_ENABLED
+    value: "yes"
+  - name: VPN_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: "openvpn"
+        key: "username.txt"
+  - name: VPN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: "openvpn"
+        key: "password.txt"
+  - name: LAN_NETWORK
+    value: "192.168.0.0/24"
+  - name: CREATE_TUN_DEVICE
+    value: "true"
+  - name: PUID
+    value: "1000"
+  - name: PGID
+    value: "1000"
+
+service:
+  type: ClusterIP
+  port: 80
+
+volumes:
+  - name: "media-nas"
+    persistentVolumeClaim:
+      claimName: "media-nas"
+  - name: "configurations"
+    persistentVolumeClaim:
+      claimName: "configurations"
+  - name: "dev-tun"  # Needed for VPN
+    hostPath:
+      path: "/dev/net/tun"
+
+volumeMounts:
+  - name: "configurations"
+    mountPath: "/config"
+    subPath: "jackett"
+  - name: "media-nas"
+    mountPath: "/downloads"
+    subPath: "downloads/jackett"
+
+securityContext:
+  capabilities:
+    add:
+      - NET_ADMIN

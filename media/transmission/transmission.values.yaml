@@ -1,0 +1,89 @@
+replicaCount: 1
+
+image:
+  repository: "haugene/transmission-openvpn"
+  tag: "latest-armhf"
+  pullPolicy: "IfNotPresent"
+
+env:
+  - name: OPENVPN_PROVIDER
+    value: "NORDVPN"
+  - name: OPENVPN_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: "openvpn"
+        key: "username.txt"
+  - name: OPENVPN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: "openvpn"
+        key: "password.txt"
+  - name: NORDVPN_PROTOCOL
+    value: "TCP"
+  - name: NORDVPN_COUNTRY
+    value: "NL"
+  - name: NORDVPN_CATEGORY
+    value: "P2P"
+  - name: LOCAL_NETWORK
+    value: "192.168.0.0/24"
+  - name: TRANSMISSION_PEER_PORT
+    value: "47444"
+  - name: TRANSMISSION_DOWNLOAD_DIR
+    value: "/downloads/transmission"
+  - name: PUID
+    value: "1000"
+  - name: PGID
+    value: "1000"
+  - name: TRANSMISSION_RPC_PASSWORD
+    value: "VgnhqmFvtKWR77JgndgJNKPWJz6gX92zQpp7a6FxdE4Ti2ueYBXFerW6eYFyxHCh"
+#    valueFrom:
+#      secretKeyRef:
+#        name: "transmissionuser"
+#        key: "transmissionpassword"
+  - name: TRANSMISSION_RPC_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: "transmissionuser"
+        key: "transmissionuser"
+  - name: TRANSMISSION_RPC_AUTHENTICATION_REQUIRED
+    value: "true"
+  - name: TRANSMISSION_INCOMPLETE_DIR_ENABLED
+    value: "false"
+  - name: TRANSMISSION_INCOMPLETE_DIR
+    value: "/downloads/incomplete"
+  - name: TRANSMISSION_WATCH_DIR
+    value: "/downloads/watch"
+  - name: "TRANSMISSION_RATIO_LIMIT"
+    value: "0"
+  - name: "TRANSMISSION_RATIO_LIMIT_ENABLED"
+    value: "true"
+
+service:
+  type: ClusterIP
+  port: 80
+
+volumes:
+  - name: "media-nas"
+    persistentVolumeClaim:
+      claimName: "media-nas"
+  - name: "configurations"
+    persistentVolumeClaim:
+      claimName: "configurations"
+  - name: "dev-tun"
+    hostPath:
+      path: "/dev/net/tun"
+
+volumeMounts:
+  - name: "configurations"
+    mountPath: "/data"
+    subPath: ""
+  - name: "media-nas"
+    mountPath: "/downloads/transmission"
+    subPath: "downloads/transmission"
+  - name: "dev-tun"
+    mountPath: "/dev/net/tun"
+
+securityContext:
+  capabilities:
+    add:
+      - NET_ADMIN
