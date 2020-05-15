@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jackett-test
+spec:
+  selector:
+    matchLabels:
+      app: jackett-test
+  template:
+    metadata:
+      labels:
+        app: jackett-test
+    spec:
+      containers:
+      - env:
+        - name: VPN_ENABLED
+          value: "yes"
+        - name: VPN_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: "openvpn"
+              key: "username.txt"
+        - name: VPN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "openvpn"
+              key: "password.txt"
+        - name: LAN_NETWORK
+          value: "192.168.0.0/24"
+        - name: CREATE_TUN_DEVICE
+          value: "true"
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        image: "gjeanmart/jackettvpn"
+        imagePullPolicy: IfNotPresent
+        name: jackett-test
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
+        ports:
+        - containerPort: 9117
+          protocol: TCP
+        volumeMounts:
+          - name: "configurations"
+            mountPath: "/config"
+            subPath: "jackett"
+      restartPolicy: Always
+      volumes:
+        - name: "media-nas"
+          persistentVolumeClaim:
+            claimName: "media-nas"
+        - name: "configurations"
+          persistentVolumeClaim:
+            claimName: "configurations"
+        - name: "dev-tun"
+          hostPath:
+            path: "/dev/net/tun"
+

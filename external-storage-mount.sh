@@ -1,14 +1,14 @@
 #!/bin/bash
 
-mount_nas=true
-nas_path="//192.168.1.202/public/Shared\\\040Videos"
-nas_server_path="/home/pi/NAS"
-nas_credentials_path="/etc/.NAScredentials"
-nas_user=pi
-kube_user=pi
-nas_password="HGBtPL6BW;oc6J.G#Ew7w6iygCUrj.Tb"
+mount_nas=$1
+nas_path=$2
+nas_server_path=$3
+nas_credentials_path=$4
+nas_user=$5
+kube_user=$6
+nas_password=$7
 
-mount_usb=false
+mount_usb=$8
 
 ##Mount NAS
 if [ $mount_nas = true ] ; then

@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   namespace: "media"
@@ -35,3 +35,7 @@ spec:
             serviceName: "jellyfin"
             servicePort: 80
           path: "/jellyfin"
+        - backend:
+            serviceName: "transmission-test"
+            servicePort: 80
+          path: "/transmission-test"

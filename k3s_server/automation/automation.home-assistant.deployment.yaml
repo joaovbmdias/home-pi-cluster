@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: home-assistant
+spec:
+  selector:
+    matchLabels:
+      app: home-assistant
+  template:
+    metadata:
+      labels:
+        app: home-assistant
+    spec:
+      containers:
+      - env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        image: docker.io/homeassistant/raspberrypi4-homeassistant
+        imagePullPolicy: IfNotPresent
+        name: home-assistant
+        ports:
+        - containerPort: 8123
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /config
+          subPath: "home-assistant"
+          name: configurations
+      restartPolicy: Always
+      volumes:
+      - name: configurations
+        persistentVolumeClaim:
+          claimName: automation-configurations

@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr
+spec:
+  selector:
+    matchLabels:
+      app: sonarr
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      containers:
+      - env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        image: docker.io/linuxserver/sonarr
+        imagePullPolicy: IfNotPresent
+        name: sonarr
+        ports:
+        - containerPort: 8989
+          protocol: TCP
+        volumeMounts:
+          - name: configurations
+            mountPath: "/config"
+            subPath: "sonarr"
+          - name: media-nas
+            mountPath: "/downloads/transmission"
+            subPath: "downloads/transmission"
+          - name: media-nas
+            mountPath: "/tv"
+            subPath: ""
+      restartPolicy: Always
+      volumes:
+      - name: media-nas
+        persistentVolumeClaim:
+          claimName: media-nas
+      - name: configurations
+        persistentVolumeClaim:
+          claimName: configurations

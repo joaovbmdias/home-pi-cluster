@@ -1,11 +1,11 @@
 #!/bin/bash
 
-new_password=raspberry3
-user=pi
-new_hostname=raspberry3
+new_password=$1
+user=$2
+new_hostname=$3
 cur_hostname="$(hostname)"
-new_ip=192.168.1.40
-new_dns=192.168.1.204
+new_ip=$4
+new_dns=$5
 
 if [ -z "$new_hostname" ]; then
     new_hostname="$(hostname)"

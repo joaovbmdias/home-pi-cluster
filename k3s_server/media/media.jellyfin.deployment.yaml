@@ -1,15 +1,15 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: homeassistant
+  name: jellyfin
 spec:
   selector:
     matchLabels:
-      app: homeassistant
+      app: jellyfin
   template:
     metadata:
       labels:
-        app: homeassistant
+        app: jellyfin
     spec:
       containers:
       - env:
@@ -28,18 +28,31 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: docker.io/homeassistant/raspberrypi4-homeassistant
+        image: docker.io/jellyfin/jellyfin
         imagePullPolicy: IfNotPresent
-        name: homeassistant
+        name: jellyfin
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
         ports:
-        - containerPort: 8123
+        - containerPort: 8096
           protocol: TCP
         volumeMounts:
+        - mountPath: /data/media
+          name: media
+          readOnly: True
         - mountPath: /config
-          subPath: "home-assistant"
+          subPath: "jellyfin"
           name: configurations
       restartPolicy: Always
       volumes:
+      - name: media
+        persistentVolumeClaim:
+          claimName: media-nas
       - name: configurations
         persistentVolumeClaim:
-          claimName: automationconfigs
+          claimName: media-configurations

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   namespace: "media"
-  name: "configurations"
+  name: "media-configurations"
 spec:
   storageClassName: "manual"
   accessModes:

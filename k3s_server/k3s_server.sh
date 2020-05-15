@@ -1,12 +1,12 @@
 #!/bin/bash
 
-master_node=true
-master_node_ip=192.168.1.250
-master_access_token=
+master_node=$1
+master_node_ip=$2
+master_access_token=$3
 
-install_helm=true
-add_helm_repository_stable=true
-add_helm_repository_jetstack=true
+install_helm=$4
+add_helm_repository_stable=$5
+add_helm_repository_jetstack=$6
 
 if [ "$master_node" = true ] ; then
     echo Deploying K3S Master Node

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   namespace: "automation"
-  name: "automationconfigs"
+  name: "automation-configurations"
 spec:
   storageClassName: "manual"
   accessModes:
