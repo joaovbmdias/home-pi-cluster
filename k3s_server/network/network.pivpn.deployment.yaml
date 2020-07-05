@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pivpn
+spec:
+  selector:
+    matchLabels:
+      app: pivpn
+  template:
+    metadata:
+      labels:
+        app: pivpn
+    spec:
+      containers:
+      - name: pivpn
+        image: docker.io/ljishen/pivpn
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 443
+          protocol: UDP
+        volumeMounts:
+        - mountPath: /home/pivpn/ovpns
+          subPath: "pivpn"
+          name: network-configurations
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
+      restartPolicy: Always
+      volumes:
+      - name: network-configurations
+        persistentVolumeClaim:
+          claimName: network-configurations

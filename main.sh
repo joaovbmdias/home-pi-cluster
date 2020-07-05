@@ -13,7 +13,7 @@ new_password=raspberry3
 user=pi
 new_hostname=raspberry3
 new_ip=192.168.1.200
-new_dns=192.168.1.204
+new_dns=192.168.1.250
 
 #deploy server
 master_node=true

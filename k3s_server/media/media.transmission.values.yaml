@@ -4,6 +4,7 @@ image:
   repository: "haugene/transmission-openvpn"
   tag: "latest-armhf"
   pullPolicy: "IfNotPresent"
+  name: transmission
 
 env:
   - name: OPENVPN_PROVIDER
@@ -66,15 +67,15 @@ volumes:
   - name: "media-nas"
     persistentVolumeClaim:
       claimName: "media-nas"
-  - name: "configurations"
+  - name: "media-configurations"
     persistentVolumeClaim:
-      claimName: "configurations"
+      claimName: "media-configurations"
   - name: "dev-tun"
     hostPath:
       path: "/dev/net/tun"
 
 volumeMounts:
-  - name: "configurations"
+  - name: "media-configurations"
     mountPath: "/data"
     subPath: ""
   - name: "media-nas"

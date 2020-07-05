@@ -39,7 +39,7 @@ spec:
         - containerPort: 7878
           protocol: TCP
         volumeMounts:
-          - name: configurations
+          - name: media-configurations
             mountPath: "/config"
             subPath: "radarr"
           - name: media-nas
@@ -53,6 +53,6 @@ spec:
       - name: media-nas
         persistentVolumeClaim:
           claimName: media-nas
-      - name: configurations
+      - name: media-configurations
         persistentVolumeClaim:
-          claimName: configurations
+          claimName: media-configurations

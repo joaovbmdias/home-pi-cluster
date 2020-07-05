@@ -2,13 +2,13 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: transmission
-  name: transmission
+    app: pivpn
+  name: pivpn
 spec:
   ports:
   - port: 80
     protocol: TCP
-    targetPort: 9091
+    targetPort: 80
   selector:
-    app: transmission
+    app: pivpn
   type: ClusterIP

@@ -32,23 +32,17 @@ service:
   port: 80
 
 volumes:
-  - name: "media-nas"
+  - name: "media-configurations"
     persistentVolumeClaim:
-      claimName: "media-nas"
-  - name: "configurations"
-    persistentVolumeClaim:
-      claimName: "configurations"
-  - name: "dev-tun"  # Needed for VPN
+      claimName: "media-configurations"
+  - name: "dev-tun"
     hostPath:
       path: "/dev/net/tun"
 
 volumeMounts:
-  - name: "configurations"
+  - name: "media-configurations"
     mountPath: "/config"
     subPath: "jackett"
-  - name: "media-nas"
-    mountPath: "/downloads"
-    subPath: "downloads/jackett"
 
 securityContext:
   capabilities:

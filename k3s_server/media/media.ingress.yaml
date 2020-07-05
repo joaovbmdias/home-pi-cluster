@@ -12,30 +12,52 @@ spec:
     - media.192.168.1.100.nip.io
     secretName: "media.192.168.1.100.nip.io-prod-tls"
   rules:
-  - host: "media.192.168.1.100.nip.io"
+  - host: "transmission.192.168.1.100.nip.io"
     http:
       paths:
         - backend:
             serviceName: "transmission-transmission-openvpn"
             servicePort: 80
-          path: "/transmission"
-        - backend:
-            serviceName: "sonarr"
-            servicePort: 80
-          path: "/sonarr"
+          path: ""
+  - host: "jackett.192.168.1.100.nip.io"
+    http:
+      paths:
         - backend:
             serviceName: "jackett"
             servicePort: 80
-          path: "/jackett"
+          path: ""
+  - host: "sonarr.192.168.1.100.nip.io"
+    http:
+      paths:
+        - backend:
+            serviceName: "sonarr"
+            servicePort: 80
+          path: ""
+  - host: "radarr.192.168.1.100.nip.io"
+    http:
+      paths:
         - backend:
             serviceName: "radarr"
             servicePort: 80
-          path: "/radarr"
+          path: ""
+  - host: "jellyfin.192.168.1.100.nip.io"
+    http:
+      paths:
         - backend:
             serviceName: "jellyfin"
             servicePort: 80
-          path: "/jellyfin"
+          path: ""
+  - host: "lidarr.192.168.1.100.nip.io"
+    http:
+      paths:
         - backend:
-            serviceName: "transmission-test"
+            serviceName: "lidarr"
             servicePort: 80
-          path: "/transmission-test"
+          path: ""
+  - host: "transmission2.192.168.1.100.nip.io"
+    http:
+      paths:
+        - backend:
+            serviceName: "transmission"
+            servicePort: 80
+          path: ""
