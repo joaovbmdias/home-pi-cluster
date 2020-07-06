@@ -42,17 +42,20 @@ spec:
           - name: media-configurations
             mountPath: "/config"
             subPath: "sonarr"
-          - name: media-nas
+          - name: media-downloads
             mountPath: "/downloads/transmission"
-            subPath: "downloads/transmission"
-          - name: media-nas
+            subPath: ""
+          - name: media-videos
             mountPath: "/tv"
             subPath: ""
       restartPolicy: Always
       volumes:
-      - name: media-nas
+      - name: media-downloads
         persistentVolumeClaim:
-          claimName: media-nas
+          claimName: media-downloads
+      - name: media-videos
+        persistentVolumeClaim:
+          claimName: media-videos
       - name: media-configurations
         persistentVolumeClaim:
           claimName: media-configurations

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "media-videos"
+  labels:
+    type: "local"
+spec:
+  storageClassName: "manual"
+  capacity:
+    storage: "2900Gi"
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/Video"

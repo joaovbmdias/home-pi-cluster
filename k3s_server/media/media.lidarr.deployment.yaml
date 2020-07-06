@@ -42,17 +42,20 @@ spec:
           - name: media-configurations
             mountPath: "/config"
             subPath: "lidarr"
-          - name: media-nas
+          - name: media-downloads
             mountPath: "/downloads/transmission"
-            subPath: "downloads/transmission"
-          - name: media-nas
+            subPath: ""
+          - name: media-music
             mountPath: "/music"
             subPath: ""
       restartPolicy: Always
       volumes:
-      - name: media-nas
+      - name: media-music
         persistentVolumeClaim:
-          claimName: media-nas
+          claimName: media-music
+      - name: media-downloads
+        persistentVolumeClaim:
+          claimName: media-downloads
       - name: media-configurations
         persistentVolumeClaim:
           claimName: media-configurations

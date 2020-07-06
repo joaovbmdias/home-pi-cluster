@@ -52,7 +52,7 @@ spec:
       volumes:
       - name: media
         persistentVolumeClaim:
-          claimName: media-nas
+          claimName: media-videos
       - name: configurations
         persistentVolumeClaim:
           claimName: media-configurations
