@@ -17,9 +17,9 @@ spec:
         release: transmission
     spec:
       volumes:
-        - name: media-nas
+        - name: media-downloads
           persistentVolumeClaim:
-            claimName: media-nas
+            claimName: media-downloads
         - name: media-configurations
           persistentVolumeClaim:
             claimName: media-configurations
@@ -89,9 +89,9 @@ spec:
           volumeMounts:
             - name: media-configurations
               mountPath: /data
-            - name: media-nas
+            - name: media-downloads
               mountPath: /downloads/transmission
-              subPath: downloads/transmission
+              subPath: ""
             - name: dev-tun
               mountPath: /dev/net/tun
           terminationMessagePath: /dev/termination-log
@@ -103,17 +103,6 @@ spec:
                 - NET_ADMIN
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-      dnsPolicy: None
+      dnsPolicy: ClusterFirst
       securityContext: {}
       schedulerName: default-scheduler
-      dnsConfig:
-        nameservers:
-          - 8.8.8.8
-          - 8.8.4.4
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 25%
-      maxSurge: 25%
-  revisionHistoryLimit: 10
-  progressDeadlineSeconds: 600

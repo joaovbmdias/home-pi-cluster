@@ -16,7 +16,7 @@ spec:
     http:
       paths:
         - backend:
-            serviceName: "transmission-transmission-openvpn"
+            serviceName: "transmission"
             servicePort: 80
           path: ""
   - host: "jackett.192.168.1.100.nip.io"
@@ -52,12 +52,5 @@ spec:
       paths:
         - backend:
             serviceName: "lidarr"
-            servicePort: 80
-          path: ""
-  - host: "transmission2.192.168.1.100.nip.io"
-    http:
-      paths:
-        - backend:
-            serviceName: "transmission"
             servicePort: 80
           path: ""
