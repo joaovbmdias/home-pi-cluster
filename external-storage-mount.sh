@@ -24,7 +24,7 @@ if [ $mount_nas = true ] ; then
 
     grep -q $nas_server_path /etc/fstab
     if [ $? != 0 ]; then
-        echo $nas_path $nas_server_path 'cifs credentials=/etc/.NAScredentials,uid=1000,gid=1000 0 0' >> /etc/fstab
+        echo $nas_path $nas_server_path 'cifs credentials=$nas_credentials_path,uid=1000,gid=1000 0 0' >> /etc/fstab
     fi
 
     mount -a

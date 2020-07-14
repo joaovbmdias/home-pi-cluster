@@ -9,15 +9,15 @@ external_storage_mount=true
 activate_watchdog=true
 
 #initial setup
-new_password=raspberry3
+new_password=<SOMEPASSWORD>
 user=pi
-new_hostname=raspberry3
-new_ip=192.168.1.200
-new_dns=192.168.1.250
+new_hostname=<SOMEHOSTNAME>
+new_ip=<SOMEIP>
+new_dns=<SOMEIP>
 
 #deploy server
 master_node=true
-master_node_ip=192.168.1.250
+master_node_ip=<SOMEIP>
 master_access_token=
 install_helm=true
 add_helm_repository_stable=true
@@ -25,12 +25,12 @@ add_helm_repository_jetstack=true
 
 #external storage mount
 mount_nas=true
-nas_path="//192.168.1.202/public/Shared\\\040Videos"
-nas_server_path="/home/pi/NAS"
-nas_credentials_path="/etc/.NAScredentials"
-nas_user=pi
-kube_user=pi
-nas_password="HGBtPL6BW;oc6J.G#Ew7w6iygCUrj.Tb"
+nas_path=<SOMEPATH>
+nas_server_path=<SOMEPATH>
+nas_credentials_path=<SOMEPATH>
+nas_user=<SOMEUSER>
+kube_user=<SOMEUSER>
+nas_password=<SOMEPASSWORD>
 mount_usb=false
 
 if [ "$initial_setup" = true ] ; then
