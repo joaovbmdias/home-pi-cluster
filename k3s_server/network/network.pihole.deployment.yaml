@@ -34,7 +34,7 @@ spec:
         - name: WEBPASSWORD
           valueFrom:
             secretKeyRef:
-              name: "pihole-secret"
+              name: "pihole"
               key: "password"
         volumeMounts:
         - mountPath: /etc/pihole

@@ -41,12 +41,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: openvpn
-                  key: username.txt
+                  key: username
             - name: OPENVPN_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: openvpn
-                  key: password.txt
+                  key: password
             - name: NORDVPN_PROTOCOL
               value: TCP
             - name: NORDVPN_COUNTRY
@@ -66,13 +66,13 @@ spec:
             - name: TRANSMISSION_RPC_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: "transmissionuser"
-                  key: "transmissionpassword"
+                  name: transmissionuser
+                  key: password
             - name: TRANSMISSION_RPC_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: transmissionuser
-                  key: transmissionuser
+                  key: user
             - name: TRANSMISSION_RPC_AUTHENTICATION_REQUIRED
               value: 'true'
             - name: TRANSMISSION_INCOMPLETE_DIR_ENABLED
